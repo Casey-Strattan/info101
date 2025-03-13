@@ -12,17 +12,17 @@ library(marinecs100b)
 # P2 Critique the organization of woa.csv according to the characteristics of
 # tidy data.
 
-
+# Non consistent names, wide format, not cool
 
 # Importing data ----------------------------------------------------------
 
 # P3 P3 Call read.csv() on woa.csv. What error message do you get? What do you
 # think that means?
-csv <- read.csv("woa.csv")
-View(csv)
+woa_csv <- read.csv("woa.csv")
+View(woa_csv)
 
 # P4 Re-write the call to read.csv() to avoid the error in P3.
-csv <- read.csv("woa.csv", skip = 1)
+woa_csv <- read.csv("woa.csv", skip = 1)
 
 
 # Fix the column names ----------------------------------------------------
@@ -40,7 +40,7 @@ depths <- c(
 # P6 Create a vector called woa_colnames with clean names for all 104 columns.
 # Make them the column names of your WOA data frame.
 woa_colnames <- c(c("latitude", "longitude"), paste0(depths,"m"))
-colnames(csv) <- woa_colnames
+colnames(woa_csv) <- woa_colnames
 
 
 
@@ -48,8 +48,8 @@ colnames(csv) <- woa_colnames
 
 # P7 What is the mean water temperature globally in the twilight zone (200-1000m
 # depth)?
-measurement_sums <- sum(csv[ , 27:49], na.rm = TRUE)
-num_measurements <- sum(!is.na(csv[ , 27:49]))
+measurement_sums <- sum(woa_csv[ , 27:49], na.rm = TRUE)
+num_measurements <- sum(!is.na(woa_csv[ , 27:49]))
 mean <- measurement_sums/num_measurements
 
 
@@ -57,8 +57,8 @@ mean <- measurement_sums/num_measurements
 # Analyzing long-format data ----------------------------------------------
 
 # P8 Using woa_long, find the mean water temperature globally in the twilight zone.
-new_woa_long <- woa_long[woa_long$depth == 200:1000, 4]
-mean(new_woa_long)
+mean(woa_long[woa_long$depth %in% 200:1000, 4])
+
 
 # P9 Compare and contrast your solutions to P8 and P9.
 #Both pretty concise but the method in P8 was incredibly simple and easy to follow
